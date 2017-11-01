@@ -16,6 +16,17 @@ Installation
 
 `composer require elife/api-problem`
 
+Set up
+------
+
+### Silex
+
+```php
+use eLife\ApiProblem\Silex\ApiProblemProvider;
+
+$app->register(new ApiProblemProvider());
+```
+
 Running the tests
 -----------------
 
