@@ -10,6 +10,7 @@ use Silex\Application;
 use Silex\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Traversable;
 
 final class ApiProblemProviderTest extends WebTestCase
 {
@@ -18,13 +19,24 @@ final class ApiProblemProviderTest extends WebTestCase
 
     /**
      * @test
+     * @dataProvider serviceProvider
      */
-    public function it_creates_services()
+    public function it_creates_services(string $id, string $class)
     {
-        $this->assertArrayHasKey('api_problem.factory', $this->app);
-        $this->assertInstanceOf(ApiProblemFactory::class, $this->app['api_problem.factory']);
-        $this->assertArrayHasKey('api_problem.handler', $this->app);
-        $this->assertInstanceOf(ApiProblemHandler::class, $this->app['api_problem.handler']);
+        $this->assertArrayHasKey($id, $this->app);
+        $this->assertInstanceOf($class, $this->app[$id]);
+    }
+
+    public function serviceProvider() : Traversable
+    {
+        $services = [
+            'api_problem.factory' => ApiProblemFactory::class,
+            'api_problem.handler' => ApiProblemHandler::class,
+        ];
+
+        foreach ($services as $id => $type) {
+            yield $id => [$id, $type];
+        }
     }
 
     /**
