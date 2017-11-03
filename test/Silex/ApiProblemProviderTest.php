@@ -1,6 +1,6 @@
 <?php
 
-namespace test\eLife\Ping\Silex;
+namespace test\eLife\ApiProblem\Silex;
 
 use Crell\ApiProblem\ApiProblem;
 use eLife\ApiProblem\ApiProblemFactory;
