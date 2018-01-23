@@ -19,6 +19,7 @@
         "symfony/http-foundation": "^2.7 || ^3.0"
     },
     "require-dev": {
+        "guzzlehttp/psr7": "^1.0",
         "phpunit/phpunit": "^5.7.7 || ^6.0",
         "pimple/pimple": "^3.0",
         "silex/silex": "^2.0",
