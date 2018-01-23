@@ -7,6 +7,7 @@ use eLife\ApiProblem\ApiProblemHandler;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Traversable;
+use function GuzzleHttp\Psr7\normalize_header;
 
 final class ApiProblemHandlerTest extends TestCase
 {
@@ -21,10 +22,10 @@ final class ApiProblemHandlerTest extends TestCase
         $response = $handler->handle($apiProblem);
 
         $this->assertSame($expectedStatus, $response->getStatusCode());
-        $this->assertSame([
-            'cache-control' => ['no-cache, private'],
-            'content-type' => ['application/problem+json'],
-        ], $this->removeDate($response->headers->all()));
+        $this->assertSame($this->sanitiseHeaders([
+            'Cache-Control' => ['no-cache, private'],
+            'Content-Type' => ['application/problem+json'],
+        ]), $this->sanitiseHeaders($response->headers->all()));
         $this->assertJsonStringEqualsJsonString(json_encode($expected), $response->getContent());
     }
 
@@ -69,9 +70,17 @@ final class ApiProblemHandlerTest extends TestCase
         ];
     }
 
-    private function removeDate(array $headers)
+    private function sanitiseHeaders(array $headers) : array
     {
+        $headers = array_change_key_case($headers, CASE_LOWER);
+
         unset($headers['date']);
+
+        ksort($headers);
+
+        $headers = array_map(function (array $values) {
+            return implode(', ', normalize_header($values));
+        }, $headers);
 
         return $headers;
     }
