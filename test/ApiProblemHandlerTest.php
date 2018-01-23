@@ -19,13 +19,12 @@ final class ApiProblemHandlerTest extends TestCase
         $handler = new ApiProblemHandler();
 
         $response = $handler->handle($apiProblem);
-        $response->headers->remove('Date');
 
         $this->assertSame($expectedStatus, $response->getStatusCode());
         $this->assertSame([
             'cache-control' => ['no-cache, private'],
             'content-type' => ['application/problem+json'],
-        ], $response->headers->all());
+        ], $this->removeDate($response->headers->all()));
         $this->assertJsonStringEqualsJsonString(json_encode($expected), $response->getContent());
     }
 
@@ -68,5 +67,12 @@ final class ApiProblemHandlerTest extends TestCase
                 'foo' => 'bar',
             ],
         ];
+    }
+
+    private function removeDate(array $headers)
+    {
+        unset($headers['date']);
+
+        return $headers;
     }
 }
