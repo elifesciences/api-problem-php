@@ -27,6 +27,8 @@ use eLife\ApiProblem\Silex\ApiProblemProvider;
 $app->register(new ApiProblemProvider());
 ```
 
+Stacktraces will be included based on the value of `$app['debug']`. This can be overridden by setting `$app['api_problem.factory.include_exception_details']` to `true` or `false`.
+
 Running the tests
 -----------------
 
