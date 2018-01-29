@@ -33,7 +33,9 @@ final class ApiProblemFactory
         if ($this->includeExceptionDetails) {
             $extra = [
                 'exception' => $e->getMessage(),
-                'stacktrace' => $e->getTraceAsString(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'stacktrace' => $e->getTrace(),
             ];
         }
 

@@ -60,7 +60,9 @@ final class ApiProblemProviderTest extends WebTestCase
         if ($includeExceptionDetails) {
             $expected = [
                 'exception' => 'problem',
-                'stacktrace' => $this->exception->getTraceAsString(),
+                'file' => $this->exception->getFile(),
+                'line' => $this->exception->getLine(),
+                'stacktrace' => $this->exception->getTrace(),
                 'title' => 'problem',
                 'type' => 'about:blank',
             ];
@@ -95,7 +97,9 @@ final class ApiProblemProviderTest extends WebTestCase
                 'type' => 'about:blank',
                 'title' => 'Error',
                 'exception' => 'an exception',
-                'stacktrace' => $this->exception->getTraceAsString(),
+                'file' => $this->exception->getFile(),
+                'line' => $this->exception->getLine(),
+                'stacktrace' => $this->exception->getTrace(),
             ];
         } else {
             $expected = [
