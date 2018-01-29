@@ -39,6 +39,7 @@ final class ApiProblemFactoryTest extends TestCase
         $apiProblem = new ApiProblem('message');
         $apiProblem->setStatus(Response::HTTP_I_AM_A_TEAPOT);
         $apiProblem['exception'] = 'message';
+        $apiProblem['exception-class'] = get_class($exception);
         $apiProblem['file'] = $exception->getFile();
         $apiProblem['line'] = $exception->getLine();
         $apiProblem['stacktrace'] = $exception->getTrace();
@@ -63,6 +64,7 @@ final class ApiProblemFactoryTest extends TestCase
         $apiProblem = new ApiProblem('Error');
         $apiProblem->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
         $apiProblem['exception'] = 'message';
+        $apiProblem['exception-class'] = get_class($exception);
         $apiProblem['file'] = $exception->getFile();
         $apiProblem['line'] = $exception->getLine();
         $apiProblem['stacktrace'] = $exception->getTrace();
