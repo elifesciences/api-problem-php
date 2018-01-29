@@ -9,6 +9,13 @@ use Throwable;
 
 final class ApiProblemFactory
 {
+    private $includeExceptionDetails;
+
+    public function __construct(bool $includeExceptionDetails = true)
+    {
+        $this->includeExceptionDetails = $includeExceptionDetails;
+    }
+
     public function create(Throwable $e) : ApiProblem
     {
         if ($e instanceof ApiProblemException) {
@@ -21,9 +28,15 @@ final class ApiProblemFactory
         } else {
             $status = Response::HTTP_INTERNAL_SERVER_ERROR;
             $message = 'Error';
-            $extra = [
-                'exception' => $e->getMessage(),
-                'stacktrace' => $e->getTraceAsString(),
+        }
+
+        if ($this->includeExceptionDetails) {
+            $extra['exception'] = [
+                'message' => $e->getMessage(),
+                'class' => get_class($e),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'stacktrace' => $e->getTrace(),
             ];
         }
 
