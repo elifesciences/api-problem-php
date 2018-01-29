@@ -18,9 +18,9 @@ final class ApiProblemFactoryTest extends TestCase
      * @test
      * @dataProvider apiProblemProvider
      */
-    public function it_creates_an_api_problem(Throwable $exception, ApiProblem $expected)
+    public function it_creates_an_api_problem(Throwable $exception, ApiProblem $expected, bool $includeExceptionDetails)
     {
-        $factory = new ApiProblemFactory();
+        $factory = new ApiProblemFactory($includeExceptionDetails);
 
         $this->assertEquals($expected, $factory->create($exception));
     }
@@ -32,14 +32,29 @@ final class ApiProblemFactoryTest extends TestCase
         yield 'ApiProblemException' => [
             new ApiProblemException($apiProblem),
             $apiProblem,
+            true,
         ];
 
+        $exception = new HttpException(Response::HTTP_I_AM_A_TEAPOT, 'message');
+        $apiProblem = new ApiProblem('message');
+        $apiProblem->setStatus(Response::HTTP_I_AM_A_TEAPOT);
+        $apiProblem['exception'] = 'message';
+        $apiProblem['stacktrace'] = $exception->getTraceAsString();
+
+        yield 'HttpException with details' => [
+            $exception,
+            $apiProblem,
+            true,
+        ];
+
+        $exception = new HttpException(Response::HTTP_I_AM_A_TEAPOT, 'message');
         $apiProblem = new ApiProblem('message');
         $apiProblem->setStatus(Response::HTTP_I_AM_A_TEAPOT);
 
-        yield 'HttpException' => [
-            new HttpException(Response::HTTP_I_AM_A_TEAPOT, 'message'),
+        yield 'HttpException without details' => [
+            $exception,
             $apiProblem,
+            false,
         ];
 
         $exception = new Exception('message');
@@ -48,9 +63,20 @@ final class ApiProblemFactoryTest extends TestCase
         $apiProblem['exception'] = 'message';
         $apiProblem['stacktrace'] = $exception->getTraceAsString();
 
-        yield 'Exception' => [
+        yield 'Exception with details' => [
             $exception,
             $apiProblem,
+            true,
+        ];
+
+        $exception = new Exception('message');
+        $apiProblem = new ApiProblem('Error');
+        $apiProblem->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
+
+        yield 'Exception without details' => [
+            $exception,
+            $apiProblem,
+            false,
         ];
     }
 }

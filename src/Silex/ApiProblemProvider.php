@@ -28,8 +28,12 @@ final class ApiProblemProvider implements BootableProviderInterface, ServiceProv
 
     public function register(Container $app)
     {
-        $app['api_problem.factory'] = function () {
-            return new ApiProblemFactory();
+        $app['api_problem.factory.include_exception_details'] = function () use ($app) {
+            return $app['debug'];
+        };
+
+        $app['api_problem.factory'] = function () use ($app) {
+            return new ApiProblemFactory($app['api_problem.factory.include_exception_details']);
         };
 
         $app['api_problem.handler'] = function () {
