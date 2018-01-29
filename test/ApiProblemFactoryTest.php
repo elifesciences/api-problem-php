@@ -38,11 +38,13 @@ final class ApiProblemFactoryTest extends TestCase
         $exception = new HttpException(Response::HTTP_I_AM_A_TEAPOT, 'message');
         $apiProblem = new ApiProblem('message');
         $apiProblem->setStatus(Response::HTTP_I_AM_A_TEAPOT);
-        $apiProblem['exception'] = 'message';
-        $apiProblem['exception-class'] = get_class($exception);
-        $apiProblem['file'] = $exception->getFile();
-        $apiProblem['line'] = $exception->getLine();
-        $apiProblem['stacktrace'] = $exception->getTrace();
+        $apiProblem['exception'] = [
+            'message' => 'message',
+            'class' => get_class($exception),
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine(),
+            'stacktrace' => $exception->getTrace(),
+        ];
 
         yield 'HttpException with details' => [
             $exception,
@@ -63,11 +65,13 @@ final class ApiProblemFactoryTest extends TestCase
         $exception = new Exception('message');
         $apiProblem = new ApiProblem('Error');
         $apiProblem->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
-        $apiProblem['exception'] = 'message';
-        $apiProblem['exception-class'] = get_class($exception);
-        $apiProblem['file'] = $exception->getFile();
-        $apiProblem['line'] = $exception->getLine();
-        $apiProblem['stacktrace'] = $exception->getTrace();
+        $apiProblem['exception'] = [
+            'message' => 'message',
+            'class' => get_class($exception),
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine(),
+            'stacktrace' => $exception->getTrace(),
+        ];
 
         yield 'Exception with details' => [
             $exception,
