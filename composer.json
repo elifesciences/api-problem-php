@@ -26,6 +26,9 @@
         "symfony/browser-kit": "^2.7 || ^3.0",
         "symfony/http-kernel": "^2.7 || ^3.0"
     },
+    "conflict": {
+        "sebastian/comparator": "<1.2.3"
+    },
     "suggest": {
         "silex/silex": "^2.0, to use ApiProblemProvider"
     },
