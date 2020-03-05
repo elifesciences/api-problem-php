@@ -4,10 +4,10 @@ namespace test\eLife\ApiProblem;
 
 use Crell\ApiProblem\ApiProblem;
 use eLife\ApiProblem\ApiProblemHandler;
+use function GuzzleHttp\Psr7\normalize_header;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Traversable;
-use function GuzzleHttp\Psr7\normalize_header;
 
 final class ApiProblemHandlerTest extends TestCase
 {
