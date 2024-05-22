@@ -15,7 +15,7 @@
     },
     "require": {
         "php": "^7.0",
-        "crell/api-problem": "^2.0",
+        "crell/api-problem": "^3.6",
         "symfony/http-foundation": "^2.8.52 || ^3.4.35"
     },
     "require-dev": {
