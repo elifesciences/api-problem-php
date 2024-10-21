@@ -8,7 +8,6 @@ use eLife\ApiProblem\ApiProblemHandler;
 use eLife\ApiProblem\Silex\ApiProblemProvider;
 use Exception;
 use Silex\Application;
-use Silex\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Traversable;
