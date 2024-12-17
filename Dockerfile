@@ -1,4 +1,4 @@
-ARG PHP_VERSION=7.4
+ARG PHP_VERSION=8.4
 FROM php:${PHP_VERSION}
 
 RUN apt-get update && apt-get install -y git unzip && rm -rf /var/lib/apt/lists/*
