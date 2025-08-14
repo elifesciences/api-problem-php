@@ -24,8 +24,8 @@
         "pimple/pimple": "^3.0",
         "silexandfriends/silex": "^2.3 || ^3.0",
         "squizlabs/php_codesniffer": "^3.10",
-        "symfony/browser-kit": "^3.0 || ^4.4 || ^5.0",
-        "symfony/http-kernel": "^3.0 || ^4.4 || ^5.0"
+        "symfony/browser-kit": "^3.0 || ^4.4 || ^5.0 || ^7.0",
+        "symfony/http-kernel": "^3.0 || ^4.4 || ^5.0 || ^7.0"
     },
     "conflict": {
         "sebastian/comparator": "<1.2.3"
