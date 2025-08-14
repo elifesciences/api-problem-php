@@ -1,4 +1,4 @@
-ARG PHP_VERSION=7.4
+ARG PHP_VERSION=latest
 FROM php:${PHP_VERSION}
 
 # This is a fix for buster images being moved to the archive
